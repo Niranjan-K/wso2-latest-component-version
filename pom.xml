@@ -32,7 +32,9 @@
         <jdk.version>1.7</jdk.version>
         <apache.httpclient.version>4.5</apache.httpclient.version>
         <apache.commons.lang3.version>3.4</apache.commons.lang3.version>
-        <maven.jar.plugin.version>2.6</maven.jar.plugin.version>
+        <apache.maven.jar.plugin.version>2.6</apache.maven.jar.plugin.version>
+        <apache.maven.dependency.plugin>2.10</apache.maven.dependency.plugin>
+        <apache.maven.compiler.plugin>2.3.2</apache.maven.compiler.plugin>
     </properties>
 
     <dependencies>
@@ -55,7 +57,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>${apache.maven.compiler.plugin}</version>
                 <configuration>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
@@ -64,16 +66,43 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${apache.maven.dependency.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven.jar.plugin.version}</version>
+                <version>${apache.maven.jar.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
                 <configuration>
                     <archive>
                         <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>org.nira.wso2.nexus.ComponentVersion</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

@@ -56,10 +56,10 @@ public class ComponentVersion {
         boolean ignoreSameVersion = false;
 
         for (String arg : args) {
-            if (arg.equals(Constants.CMD_POM_FILE)) {
-                pomFilePath = arg.substring(Constants.CMD_POM_FILE.length() + 2);
-            } else if (arg.equals(Constants.CMD_IGNORE_SAME_VERSION)) {
-                String param = arg.substring(Constants.CMD_IGNORE_SAME_VERSION.length() + 2);
+            if (arg.startsWith(Constants.CMD_POM_FILE)) {
+                pomFilePath = arg.substring(Constants.CMD_POM_FILE.length() + 1);
+            } else if (arg.startsWith(Constants.CMD_IGNORE_SAME_VERSION)) {
+                String param = arg.substring(Constants.CMD_IGNORE_SAME_VERSION.length() + 1);
                 if ("true".equals(param)) {
                     ignoreSameVersion = true;
                 }
@@ -67,7 +67,6 @@ public class ComponentVersion {
         }
 
 //        pomFilePath = "C:\\Users\\Nira\\Desktop\\as_pom.xml";
-
         if (pomFilePath.isEmpty()) {
             throw new ComponentException("Pom File path not specified!");
         }
