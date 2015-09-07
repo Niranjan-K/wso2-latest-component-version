@@ -144,6 +144,9 @@ public class ComponentVersion {
                                 if (Constants.PROJECT_VERSION.equalsIgnoreCase(nodeValue)) {
                                     break;
                                 }
+                                //ToDo: Check for values like the one below:
+                                //<version.tomcat>7.0.59</version.tomcat>
+                                //<orbit.version.tomcat>${version.tomcat}.wso2v3</orbit.version.tomcat>
                                 while (!Character.isDigit(nodeValue.charAt(0))) {
                                     nodeValue = nodeValue.substring(2, nodeValue.length() - 1);
                                     nodeValue = dependencyComponentVersions.get(nodeValue);
