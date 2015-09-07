@@ -216,6 +216,7 @@ public class ComponentVersion {
                     }
                     dependencyComponent.setMavenUrl(httpUrl);
                     dependencyComponent.setLatestVersion(versionList.get(versionList.size() - 1));
+                    break;
                 }
             } catch (IOException e) {
                 throw new ComponentException("Error retrieving Latest Component Version!", e);
